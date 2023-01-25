@@ -1,7 +1,7 @@
 using Xunit;
 using Payroll.Domain;
 
-namespace Payroll.Tests;
+namespace Payroll.Tests.Domain;
 
 public class UnitTest1
 {
