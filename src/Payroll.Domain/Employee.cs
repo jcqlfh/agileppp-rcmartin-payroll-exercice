@@ -11,6 +11,18 @@ public class Employee
 
     public Employee(string name, string address, PaymentType paymentType, decimal paymentValue, decimal rate = 0m)
     {
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentNullException("Name cannot be null or empty");
+        
+        if (string.IsNullOrEmpty(address))
+            throw new ArgumentNullException("Address cannot be null or empty");
+
+        if (paymentValue <= 0m)
+            throw new ArgumentException("Payment value should be a positive number");
+        
+        if (paymentType == PaymentType.Commissioned && rate <= 0m)
+            throw new ArgumentException("Commisioned employees should have a positive rate");
+
         this.Id = Guid.NewGuid();
         this.Name = name;
         this.Address = address;
