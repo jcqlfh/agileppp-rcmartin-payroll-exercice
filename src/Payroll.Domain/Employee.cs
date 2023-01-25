@@ -54,4 +54,13 @@ public class Employee
         
         if (!newAddress.Equals(this.Address))
             this.Address = newAddress;    }
+
+    public void ChangeToHourly(decimal newPaymentValue)
+    {
+        if (newPaymentValue <= 0m)
+            throw new ArgumentException("Payment value should be a positive number");
+
+        this.PaymentType = PaymentType.Hourly;
+        this.PaymentValue = newPaymentValue;
+    }
 }

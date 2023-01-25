@@ -141,10 +141,9 @@ public class EmployeeTests
         // Arrange
         var name = "Employee";
         var address = "St Emplyee";
-        var paymentType = PaymentType.Commissioned;
+        var paymentType = PaymentType.Monthly;
         decimal paymentValue = 1000;
-        decimal rate = 10;
-        var employee = new Employee(name, address, paymentType, paymentValue, rate);
+        var employee = new Employee(name, address, paymentType, paymentValue);
 
         // Act
         var newName = "NewName";
@@ -156,7 +155,6 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(rate, employee.Rate);
     }
 
     [Fact]
@@ -165,10 +163,9 @@ public class EmployeeTests
         // Arrange
         var name = "Employee";
         var address = "St Emplyee";
-        var paymentType = PaymentType.Commissioned;
+        var paymentType = PaymentType.Monthly;
         decimal paymentValue = 1000;
-        decimal rate = 10;
-        var employee = new Employee(name, address, paymentType, paymentValue, rate);
+        var employee = new Employee(name, address, paymentType, paymentValue);
 
         // Act
         var newName = "";
@@ -180,7 +177,6 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(rate, employee.Rate);
     }
 
     [Fact]
@@ -189,10 +185,9 @@ public class EmployeeTests
         // Arrange
         var name = "Employee";
         var address = "St Emplyee";
-        var paymentType = PaymentType.Commissioned;
+        var paymentType = PaymentType.Monthly;
         decimal paymentValue = 1000;
-        decimal rate = 10;
-        var employee = new Employee(name, address, paymentType, paymentValue, rate);
+        var employee = new Employee(name, address, paymentType, paymentValue);
 
         // Act
         var newAddress = "NewAdress";
@@ -204,7 +199,6 @@ public class EmployeeTests
         Assert.Equal(newAddress, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(rate, employee.Rate);
     }
 
     [Fact]
@@ -213,10 +207,9 @@ public class EmployeeTests
         // Arrange
         var name = "Employee";
         var address = "St Emplyee";
-        var paymentType = PaymentType.Commissioned;
+        var paymentType = PaymentType.Monthly;
         decimal paymentValue = 1000;
-        decimal rate = 10;
-        var employee = new Employee(name, address, paymentType, paymentValue, rate);
+        var employee = new Employee(name, address, paymentType, paymentValue);
 
         // Act
         var newAddress = "";
@@ -228,6 +221,50 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(rate, employee.Rate);
+    }
+
+    [Fact]
+    public void Employee_Monthly_Changed_To_Valid_Hourly_Value()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentType = PaymentType.Hourly;
+        var newPaymentValue = 10m; 
+        employee.ChangeToHourly(newPaymentValue);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(newPaymentType, employee.PaymentType);
+        Assert.Equal(newPaymentValue, employee.PaymentValue);
+    }
+
+    [Fact]
+    public void Employee_Monthly_Changed_To_Invalid_Hourly_Value()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentValue = 0m; 
+        Action changeAddress = () => employee.ChangeToHourly(newPaymentValue);;
+
+        // Assert
+        Assert.Throws<ArgumentException>(changeAddress);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
     }
 }

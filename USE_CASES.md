@@ -53,7 +53,6 @@ ServiceCharge <memberID> <amount>
 If the transaction is not well formed or if the <memberID> does not refer to an existing union member, the transaction is printed with an appropriate error message.
 
 ## Use Case 6: Changing Employee Details
-
 On receipt of this transaction, the system will alter one of the details of the appropriate employee record. This transaction has several possible variations:
 
 ChgEmp <EmpID> Name <name>
