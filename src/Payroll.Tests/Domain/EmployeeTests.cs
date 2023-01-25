@@ -436,4 +436,31 @@ public class EmployeeTests
         Assert.Equal(paymentValue, employee.PaymentValue);
         Assert.Equal(paymentMethod, employee.PaymentMethod);
     }
+
+    [Fact]
+    public void Employee_On_Mail_Changed_To_Valid_Hold_Payment_Method()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        
+        var employee = new Employee(name, address, paymentType, paymentValue);
+        
+        var paymentMethodAddress = "Address";
+        employee.ChangeToMailPaymentMethod(paymentMethodAddress);
+
+        // Act
+        var newPaymentMethod = PaymentMethod.Hold;
+        employee.ChangeToHoldPaymentMethod();
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(newPaymentMethod, employee.PaymentMethod);
+    }
 }

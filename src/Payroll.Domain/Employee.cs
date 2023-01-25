@@ -96,4 +96,12 @@ public class Employee
         this.PaymentBankAccount = null;
         this.PaymentBank = null;
     }
+
+    public void ChangeToHoldPaymentMethod()
+    {
+        this.PaymentMethod = PaymentMethod.Hold;
+        this.PaymentAddress = null;
+        this.PaymentBankAccount = null;
+        this.PaymentBank = null;    
+    }
 }
