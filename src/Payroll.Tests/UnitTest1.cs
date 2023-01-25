@@ -1,4 +1,5 @@
 using Xunit;
+using Payroll.Domain;
 
 namespace Payroll.Tests;
 
