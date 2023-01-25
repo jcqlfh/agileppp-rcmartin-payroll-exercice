@@ -1,6 +1,6 @@
 # agileppp-rcmartin-payroll-exercise
 
-This is a repo to hold the evolution of the solution on the exercise proposed in the book "Agile Principles, Patterns, and Practices in C#"
+This is a repo to hold the evolution of the solution on the exercise proposed in the book "Agile Principles, Patterns, and Practices in C#" using a TDD appoach.
 
 ## Exercise
 
