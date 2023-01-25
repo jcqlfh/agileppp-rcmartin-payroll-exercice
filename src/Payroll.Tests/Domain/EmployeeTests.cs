@@ -312,4 +312,79 @@ public class EmployeeTests
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
     }
+
+    [Fact]
+    public void Employee_Monthly_Changed_To_Valid_Comissioned_Values()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentType = PaymentType.Commissioned;
+        var newPaymentValue = 1000m;
+        var newRate = 10m;
+        employee.ChangeToCommissioned(newPaymentValue, newRate);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(newPaymentType, employee.PaymentType);
+        Assert.Equal(newPaymentValue, employee.PaymentValue);
+        Assert.Equal(newRate, employee.Rate);
+    }
+
+    [Fact]
+    public void Employee_Monthly_Changed_To_Invalid_Comissioned_Payment_Value()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 10m;
+        decimal rate = 0;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentValue = 0m;
+        var newRate = 10m;
+        Action changeCommisioned = () => employee.ChangeToCommissioned(newPaymentValue, newRate);
+
+        // Assert
+        Assert.Throws<ArgumentException>(changeCommisioned);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(rate, employee.Rate);
+    }
+
+    [Fact]
+    public void Employee_Monthly_Changed_To_Invalid_Comissioned_Rate_Value()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 10m;
+        decimal rate = 0;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentValue = 1000m;
+        var newRate = 0m;
+        Action changeCommisioned = () => employee.ChangeToCommissioned(newPaymentValue, newRate);
+
+        // Assert
+        Assert.Throws<ArgumentException>(changeCommisioned);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(rate, employee.Rate);
+    }
 }

@@ -72,4 +72,17 @@ public class Employee
         this.PaymentType = PaymentType.Monthly;
         this.PaymentValue = newPaymentValue;
     }
+
+    public void ChangeToCommissioned(decimal newPaymentValue, decimal newRate)
+    {
+        if (newPaymentValue <= 0m)
+            throw new ArgumentException("Payment value should be a positive number");
+        
+        if (newRate <= 0m)
+            throw new ArgumentException("Commisioned employees should have a positive rate");
+        
+        this.PaymentType = PaymentType.Commissioned;
+        this.PaymentValue = newPaymentValue;
+        this.Rate = newRate;
+    }
 }
