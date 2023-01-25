@@ -2,6 +2,7 @@
 
 public class Employee
 {
+    public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string Address { get; private set; }
     public PaymentType PaymentType { get; private set; }
@@ -9,6 +10,7 @@ public class Employee
 
     public Employee(string name, string address, PaymentType paymentType, decimal paymentValue)
     {
+        this.Id = Guid.NewGuid();
         this.Name = name;
         this.Address = address;
         this.PaymentType = paymentType;

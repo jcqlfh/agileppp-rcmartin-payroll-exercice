@@ -18,6 +18,7 @@ public class EmployeeTests
         var employee = new Employee(name, address, paymentType, paymentValue);
 
         // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
         Assert.Equal(name, employee.Name);
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
