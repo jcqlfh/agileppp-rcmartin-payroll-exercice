@@ -9,6 +9,15 @@ public class SalesReceipt
 
     public SalesReceipt(Guid employeeId, DateOnly date, decimal amount)
     {
+        if (Guid.Empty.Equals(employeeId))
+            throw new ArgumentException("Emplyee Id cannot be empty");
+        
+        if (DateOnly.MaxValue.Equals(date) || DateOnly.MinValue.Equals(date))
+            throw new ArgumentException("Date should have a valid value");
+        
+        if (amount <= 0m)
+            throw new ArgumentException("Amount should be a positive value");
+
         this.Id = Guid.NewGuid();
         this.EmployeeId = employeeId;
         this.Date = date;
