@@ -37,4 +37,21 @@ public class Employee
         this.PaymentValue = paymentValue;
         this.Rate = rate;
     }
+
+    public void ChangeName(string newName)
+    {
+        if (string.IsNullOrEmpty(newName))
+            throw new ArgumentNullException("Name cannot be null or empty");
+        
+        if (!newName.Equals(this.Name))
+            this.Name = newName;
+    }
+
+    public void ChangeAddress(string newAddress)
+    {
+        if (string.IsNullOrEmpty(newAddress))
+            throw new ArgumentNullException("Address cannot be null or empty");
+        
+        if (!newAddress.Equals(this.Address))
+            this.Address = newAddress;    }
 }
