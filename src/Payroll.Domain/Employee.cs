@@ -8,6 +8,13 @@ public class Employee
     public PaymentType PaymentType { get; private set; }
     public decimal PaymentValue { get; private set; }
     public decimal Rate { get; set; }
+    public Guid MemberId { get; private set; }
+    public decimal UnionDueRate { get; private set; }
+    public bool IsUnionized { get => !Guid.Empty.Equals(MemberId); }
+    public PaymentMethod PaymentMethod { get; private set; }
+    public string? PaymentAddress { get; private set; }
+    public string? PaymentBank { get; private set; }
+    public string? PaymentBankAccount { get; private set; }
 
     public Employee(string name, string address, PaymentType paymentType, decimal paymentValue, decimal rate = 0m)
     {

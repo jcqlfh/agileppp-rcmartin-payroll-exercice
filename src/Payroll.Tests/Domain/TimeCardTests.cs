@@ -5,7 +5,7 @@ namespace Payroll.Tests.Domain;
 
 public class TimeCardTests
 {
-     [Fact]
+    [Fact]
     public void New_TimeCard_With_No_EmployeeId()
     {
         // Arrange
