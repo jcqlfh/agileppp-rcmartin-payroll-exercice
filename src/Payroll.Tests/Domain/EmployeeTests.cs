@@ -3,7 +3,7 @@ using Payroll.Domain;
 
 namespace Payroll.Tests.Domain;
 
-public class UnitTest1
+public class EmployeeTests
 {
     [Fact]
     public void New_Employee()
