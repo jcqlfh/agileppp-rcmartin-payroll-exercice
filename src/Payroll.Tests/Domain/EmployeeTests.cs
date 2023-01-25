@@ -387,4 +387,53 @@ public class EmployeeTests
         Assert.Equal(paymentValue, employee.PaymentValue);
         Assert.Equal(rate, employee.Rate);
     }
+
+    [Fact]
+    public void Employee_On_Hold_Changed_To_Valid_Mail_Payment_Method()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentMethod = PaymentMethod.Mail;
+        var newMethodAddress = "Address";
+        employee.ChangeToMailPaymentMethod(newMethodAddress);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(newPaymentMethod, employee.PaymentMethod);
+    }
+
+    [Fact]
+    public void Employee_On_Hold_Changed_To_Invalid_Mail_Payment_Method()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var paymentMethod = PaymentMethod.Hold;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newMethodAddress = "";
+        Action changePaymentMethod = () => employee.ChangeToMailPaymentMethod(newMethodAddress);
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(changePaymentMethod);
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(paymentMethod, employee.PaymentMethod);
+    }
 }

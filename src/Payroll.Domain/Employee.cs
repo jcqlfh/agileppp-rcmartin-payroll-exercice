@@ -85,4 +85,15 @@ public class Employee
         this.PaymentValue = newPaymentValue;
         this.Rate = newRate;
     }
+
+    public void ChangeToMailPaymentMethod(string newMethodAddress)
+    {
+        if (string.IsNullOrEmpty(newMethodAddress))
+            throw new ArgumentNullException("Payment address cannot be null or empty");
+
+        this.PaymentMethod = PaymentMethod.Mail;
+        this.PaymentAddress = newMethodAddress;
+        this.PaymentBankAccount = null;
+        this.PaymentBank = null;
+    }
 }
