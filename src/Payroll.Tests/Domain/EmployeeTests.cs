@@ -463,4 +463,91 @@ public class EmployeeTests
         Assert.Equal(paymentValue, employee.PaymentValue);
         Assert.Equal(newPaymentMethod, employee.PaymentMethod);
     }
+
+    [Fact]
+    public void Employee_On_Hold_Changed_To_Valid_Direct_Payment_Method()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentMethod = PaymentMethod.Direct;
+        var newPaymentMethodBank = "Bank";
+        var newPaymentMethodBankAccount = "Account";
+        employee.ChangeToDirectPaymentMethod(newPaymentMethodBank, newPaymentMethodBankAccount);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(newPaymentMethod, employee.PaymentMethod);
+        Assert.Equal(newPaymentMethodBank, employee.PaymentBank);
+        Assert.Equal(newPaymentMethodBankAccount, employee.PaymentBankAccount);
+    }
+
+    [Fact]
+    public void Employee_On_Hold_Changed_To_Invalid_Direct_Payment_Method_Bank()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var paymentMethod = PaymentMethod.Hold;
+        string? bank = null;
+        string? account = null;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentMethodBank = "";
+        var newPaymentMethodBankAccount = "Account";
+        Action changePaymentMethod = () => employee.ChangeToDirectPaymentMethod(newPaymentMethodBank, newPaymentMethodBankAccount);
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(changePaymentMethod);
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(paymentMethod, employee.PaymentMethod);
+        Assert.Equal(bank, employee.PaymentBank);
+        Assert.Equal(account, employee.PaymentBankAccount);
+    }
+
+    [Fact]
+    public void Employee_On_Hold_Changed_To_Invalid_Direct_Payment_Method_BankAccount()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var paymentMethod = PaymentMethod.Hold;
+        string? bank = null;
+        string? account = null;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentMethodBank = "Bank";
+        var newPaymentMethodBankAccount = "";
+        Action changePaymentMethod = () => employee.ChangeToDirectPaymentMethod(newPaymentMethodBank, newPaymentMethodBankAccount);
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(changePaymentMethod);
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(paymentMethod, employee.PaymentMethod);
+        Assert.Equal(bank, employee.PaymentBank);
+        Assert.Equal(account, employee.PaymentBankAccount);
+    }
 }

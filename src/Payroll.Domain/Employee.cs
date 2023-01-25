@@ -104,4 +104,18 @@ public class Employee
         this.PaymentBankAccount = null;
         this.PaymentBank = null;    
     }
+
+    public void ChangeToDirectPaymentMethod(string newPaymentMethodBank, string newPaymentMethodBankAccount)
+    {
+        if (string.IsNullOrEmpty(newPaymentMethodBank))
+            throw new ArgumentNullException("Payment bank cannot be null or empty");
+
+        if (string.IsNullOrEmpty(newPaymentMethodBankAccount))
+            throw new ArgumentNullException("Payment bank account cannot be null or empty");
+
+        this.PaymentMethod = PaymentMethod.Direct;
+        this.PaymentAddress = null;
+        this.PaymentBank = newPaymentMethodBank;
+        this.PaymentBankAccount = newPaymentMethodBankAccount;
+    }
 }
