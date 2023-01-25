@@ -1,6 +1,8 @@
 using Xunit;
 using Payroll.Domain;
 
+namespace Payroll.Tests.Domain;
+
 public class SalesReceiptTests
 {
     [Fact]
