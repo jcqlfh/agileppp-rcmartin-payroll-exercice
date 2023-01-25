@@ -23,6 +23,7 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.False(employee.IsUnionized);
     }
 
     [Fact]
@@ -44,6 +45,6 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(isUnionized, employee.IsUnionized);
+        Assert.True(employee.IsUnionized);
     }
 }
