@@ -55,7 +55,7 @@ public class Employee
         if (!newAddress.Equals(this.Address))
             this.Address = newAddress;    }
 
-    public void ChangeToHourly(decimal newPaymentValue)
+    public void ChangeToHourlyPayment(decimal newPaymentValue)
     {
         if (newPaymentValue <= 0m)
             throw new ArgumentException("Payment value should be a positive number");
@@ -64,7 +64,7 @@ public class Employee
         this.PaymentValue = newPaymentValue;
     }
 
-    public void ChangeToMonthly(decimal newPaymentValue)
+    public void ChangeToMonthlyPayment(decimal newPaymentValue)
     {
         if (newPaymentValue <= 0m)
             throw new ArgumentException("Payment value should be a positive number");
@@ -73,7 +73,7 @@ public class Employee
         this.PaymentValue = newPaymentValue;
     }
 
-    public void ChangeToCommissioned(decimal newPaymentValue, decimal newRate)
+    public void ChangeToCommissionedPayment(decimal newPaymentValue, decimal newRate)
     {
         if (newPaymentValue <= 0m)
             throw new ArgumentException("Payment value should be a positive number");

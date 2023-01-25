@@ -236,7 +236,7 @@ public class EmployeeTests
         // Act
         var newPaymentType = PaymentType.Hourly;
         var newPaymentValue = 10m; 
-        employee.ChangeToHourly(newPaymentValue);
+        employee.ChangeToHourlyPayment(newPaymentValue);
 
         // Assert
         Assert.NotEqual(Guid.Empty, employee.Id);
@@ -258,7 +258,7 @@ public class EmployeeTests
 
         // Act
         var newPaymentValue = 0m; 
-        Action changeHourly = () => employee.ChangeToHourly(newPaymentValue);;
+        Action changeHourly = () => employee.ChangeToHourlyPayment(newPaymentValue);;
 
         // Assert
         Assert.Throws<ArgumentException>(changeHourly);
@@ -281,7 +281,7 @@ public class EmployeeTests
         // Act
         var newPaymentType = PaymentType.Monthly;
         var newPaymentValue = 1000m; 
-        employee.ChangeToMonthly(newPaymentValue);
+        employee.ChangeToMonthlyPayment(newPaymentValue);
 
         // Assert
         Assert.NotEqual(Guid.Empty, employee.Id);
@@ -303,7 +303,7 @@ public class EmployeeTests
 
         // Act
         var newPaymentValue = 0m; 
-        Action changeMonthly = () => employee.ChangeToMonthly(newPaymentValue);;
+        Action changeMonthly = () => employee.ChangeToMonthlyPayment(newPaymentValue);;
 
         // Assert
         Assert.Throws<ArgumentException>(changeMonthly);
@@ -327,7 +327,7 @@ public class EmployeeTests
         var newPaymentType = PaymentType.Commissioned;
         var newPaymentValue = 1000m;
         var newRate = 10m;
-        employee.ChangeToCommissioned(newPaymentValue, newRate);
+        employee.ChangeToCommissionedPayment(newPaymentValue, newRate);
 
         // Assert
         Assert.NotEqual(Guid.Empty, employee.Id);
@@ -352,7 +352,7 @@ public class EmployeeTests
         // Act
         var newPaymentValue = 0m;
         var newRate = 10m;
-        Action changeCommisioned = () => employee.ChangeToCommissioned(newPaymentValue, newRate);
+        Action changeCommisioned = () => employee.ChangeToCommissionedPayment(newPaymentValue, newRate);
 
         // Assert
         Assert.Throws<ArgumentException>(changeCommisioned);
@@ -377,7 +377,7 @@ public class EmployeeTests
         // Act
         var newPaymentValue = 1000m;
         var newRate = 0m;
-        Action changeCommisioned = () => employee.ChangeToCommissioned(newPaymentValue, newRate);
+        Action changeCommisioned = () => employee.ChangeToCommissionedPayment(newPaymentValue, newRate);
 
         // Assert
         Assert.Throws<ArgumentException>(changeCommisioned);
