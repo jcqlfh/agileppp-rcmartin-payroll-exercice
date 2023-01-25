@@ -18,4 +18,4 @@ Some employees belong to the union. Their employee record has a field for the we
 
 The payroll application will run once each working day and pay the appropriate employees on that day. The system will be told what date the employees are to be paid to, so it will generate payments for records from the last time the employee was paid up to the specified date.
 
-
+Please, refer to the [Use Cases](USE_CASES.md) for more details.
