@@ -1,3 +1,5 @@
+namespace Payroll.Domain;
+
 public enum PaymentType
 {
     Hourly,
