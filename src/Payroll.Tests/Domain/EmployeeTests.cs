@@ -258,10 +258,55 @@ public class EmployeeTests
 
         // Act
         var newPaymentValue = 0m; 
-        Action changeAddress = () => employee.ChangeToHourly(newPaymentValue);;
+        Action changeHourly = () => employee.ChangeToHourly(newPaymentValue);;
 
         // Assert
-        Assert.Throws<ArgumentException>(changeAddress);
+        Assert.Throws<ArgumentException>(changeHourly);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+    }
+
+    [Fact]
+    public void Employee_Hourly_Changed_To_Valid_Monthly_Value()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 10m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentType = PaymentType.Monthly;
+        var newPaymentValue = 1000m; 
+        employee.ChangeToMonthly(newPaymentValue);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(newPaymentType, employee.PaymentType);
+        Assert.Equal(newPaymentValue, employee.PaymentValue);
+    }
+
+    [Fact]
+    public void Employee_Hourly_Changed_To_Invalid_Monthly_Value()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 10m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var newPaymentValue = 0m; 
+        Action changeMonthly = () => employee.ChangeToMonthly(newPaymentValue);;
+
+        // Assert
+        Assert.Throws<ArgumentException>(changeMonthly);
         Assert.Equal(name, employee.Name);
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);

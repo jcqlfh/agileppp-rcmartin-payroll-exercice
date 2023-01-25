@@ -63,4 +63,13 @@ public class Employee
         this.PaymentType = PaymentType.Hourly;
         this.PaymentValue = newPaymentValue;
     }
+
+    public void ChangeToMonthly(decimal newPaymentValue)
+    {
+        if (newPaymentValue <= 0m)
+            throw new ArgumentException("Payment value should be a positive number");
+
+        this.PaymentType = PaymentType.Monthly;
+        this.PaymentValue = newPaymentValue;
+    }
 }
