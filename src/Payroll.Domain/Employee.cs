@@ -149,4 +149,20 @@ public class Employee : IEntity
 
         _salesReceipts.Add(new SalesReceipt(date, amount));
     }
+
+    public void AddTimeCard(DateOnly date, decimal hoursWorked)
+    {
+        if (!this.PaymentType.Equals(PaymentType.Hourly))
+            throw new InvalidOperationException("This employee is not working with hourly payment");
+
+        _timeCards.Add(new TimeCard(date, hoursWorked));    
+    }
+
+    public void AddServiceCharge(decimal serviceRate)
+    {
+        if (!this.IsUnionized)
+            throw new InvalidOperationException("This employee is not unionized");
+
+        _serviceCharges.Add(new ServiceCharge(serviceRate));
+    }
 }

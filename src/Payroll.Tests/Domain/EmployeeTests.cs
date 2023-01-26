@@ -660,6 +660,51 @@ public class EmployeeTests
     }
 
     [Fact]
+    public void Add_ServiceCharge_To_Unionized_Employee()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 1000;
+
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        var memberId = Guid.NewGuid();
+        var rate = 10m;
+
+        employee.AddToUnion(memberId, rate);
+
+        decimal serviceRate = 8m;
+
+        // Act
+        employee.AddServiceCharge(serviceRate);
+
+        // Assert
+        Assert.Collection(employee.ServiceCharges, s => Assert.Equal(serviceRate, s.Due));
+    }
+
+    [Fact]
+    public void Add_ServiceCharge_To_Non_Unionized_Employee()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 1000;
+
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        decimal serviceRate = 8m;
+
+        // Act
+        var addServiceCharge = () => employee.AddServiceCharge(serviceRate);
+
+        // Assert
+        Assert.Throws<InvalidOperationException>(addServiceCharge);
+    }
+
+    [Fact]
     public void Add_SalesReceipt_To_Commissioned_Employee()
     {
         // Arrange
@@ -684,5 +729,73 @@ public class EmployeeTests
                 Assert.Equal(date, s.Date);
                 Assert.Equal(amount, s.Amount);
             });
+    }
+
+    [Fact]
+    public void Add_SalesReceipt_To_Non_Commissioned_Employee()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 1000;
+
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        var date = DateOnly.FromDateTime(DateTime.Now);
+        decimal amount = 1000m;
+
+        // Act
+        var addSalesReceipt = () => employee.AddSalesReceipt(date, amount);
+
+        // Assert
+        Assert.Throws<InvalidOperationException>(addSalesReceipt);
+    }
+
+    [Fact]
+    public void Add_TimeCard_To_Hourly_Employee()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Hourly;
+        decimal paymentValue = 1000;
+
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        var date = DateOnly.FromDateTime(DateTime.Now);
+        decimal hoursWorked = 8m;
+
+        // Act
+        employee.AddTimeCard(date, hoursWorked);
+
+        // Assert
+        Assert.Collection(employee.TimeCards, 
+            s => 
+            {
+                Assert.Equal(date, s.Date);
+                Assert.Equal(hoursWorked, s.HoursWorked);
+            });
+    }
+
+    [Fact]
+    public void Add_TimeCard_To_Non_Hourly_Employee()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000;
+
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        var date = DateOnly.FromDateTime(DateTime.Now);
+        decimal hoursWorked = 8m;
+
+        // Act
+        var addTimeCard = () => employee.AddTimeCard(date, hoursWorked);
+
+        // Assert
+        Assert.Throws<InvalidOperationException>(addTimeCard);
     }
 }
