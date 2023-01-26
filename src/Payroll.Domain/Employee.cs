@@ -1,9 +1,14 @@
-﻿using Payroll.Model;
+﻿using System.Collections.ObjectModel;
+using Payroll.Model;
 
 namespace Payroll.Domain;
 
 public class Employee : IEntity
 {
+    private IList<TimeCard> _timeCards;
+    private IList<SalesReceipt> _salesReceipts;
+    private IList<ServiceCharge> _serviceCharges;
+
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string Address { get; private set; }
@@ -14,6 +19,9 @@ public class Employee : IEntity
     public decimal UnionDueRate { get; private set; }
     public bool IsUnionized { get => !Guid.Empty.Equals(MemberId); }
     public PaycheckSettings PaymentSettings { get; private set; }
+    public IReadOnlyList<TimeCard> TimeCards { get => new ReadOnlyCollection<TimeCard>(_timeCards); }
+    public IReadOnlyList<SalesReceipt> SalesReceipts { get => new ReadOnlyCollection<SalesReceipt>(_salesReceipts); }
+    public IReadOnlyList<ServiceCharge> ServiceCharges { get => new ReadOnlyCollection<ServiceCharge>(_serviceCharges); }
     
     public Employee(string name, string address, PaymentType paymentType, decimal paymentValue, decimal rate = 0m)
     {
@@ -36,6 +44,10 @@ public class Employee : IEntity
         this.PaymentValue = paymentValue;
         this.Rate = rate;
         this.PaymentSettings = new PaycheckSettings(PaymentMethod.Hold);
+
+        this._timeCards = new List<TimeCard>();
+        this._salesReceipts = new List<SalesReceipt>();
+        this._serviceCharges = new List<ServiceCharge>();
     }
 
     public void ChangeName(string newName)
@@ -62,6 +74,9 @@ public class Employee : IEntity
 
         this.PaymentType = PaymentType.Hourly;
         this.PaymentValue = newPaymentValue;
+
+        this._salesReceipts.Clear();
+        this._timeCards.Clear();
     }
 
     public void ChangeToMonthlyPayment(decimal newPaymentValue)
@@ -71,6 +86,9 @@ public class Employee : IEntity
 
         this.PaymentType = PaymentType.Monthly;
         this.PaymentValue = newPaymentValue;
+
+        this._salesReceipts.Clear();
+        this._timeCards.Clear();
     }
 
     public void ChangeToCommissionedPayment(decimal newPaymentValue, decimal newRate)
@@ -84,6 +102,9 @@ public class Employee : IEntity
         this.PaymentType = PaymentType.Commissioned;
         this.PaymentValue = newPaymentValue;
         this.Rate = newRate;
+
+        this._salesReceipts.Clear();
+        this._timeCards.Clear();
     }
 
     public void ChangeToMailPaymentMethod(string newMethodAddress)
@@ -111,11 +132,21 @@ public class Employee : IEntity
         
         this.MemberId = memberId;
         this.UnionDueRate = unionRate;
+        this._serviceCharges.Clear();
     }
 
     public void RemoveFromUnion()
     {
         this.MemberId = Guid.Empty;
         this.UnionDueRate = 0m;
+        this._serviceCharges.Clear();
+    }
+
+    public void AddSalesReceipt(DateOnly date, decimal amount)
+    {
+        if (!this.PaymentType.Equals(PaymentType.Commissioned))
+            throw new InvalidOperationException("This employee is not working with commissioned payment");
+
+        _salesReceipts.Add(new SalesReceipt(date, amount));
     }
 }

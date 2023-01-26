@@ -658,4 +658,31 @@ public class EmployeeTests
         Assert.Equal(0, employee.UnionDueRate);
         Assert.False(employee.IsUnionized);
     }
+
+    [Fact]
+    public void Add_SalesReceipt_To_Commissioned_Employee()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Commissioned;
+        decimal paymentValue = 1000;
+        decimal rate = 10;
+
+        var employee = new Employee(name, address, paymentType, paymentValue, rate);
+
+        var date = DateOnly.FromDateTime(DateTime.Now);
+        decimal amount = 1000m;
+
+        // Act
+        employee.AddSalesReceipt(date, amount);
+
+        // Assert
+        Assert.Collection(employee.SalesReceipts, 
+            s => 
+            {
+                Assert.Equal(date, s.Date);
+                Assert.Equal(amount, s.Amount);
+            });
+    }
 }
