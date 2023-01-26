@@ -1,6 +1,8 @@
-﻿namespace Payroll.Domain;
+﻿using Payroll.Model;
 
-public class Employee
+namespace Payroll.Domain;
+
+public class Employee : IEntity
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }

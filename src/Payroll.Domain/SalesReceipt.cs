@@ -1,6 +1,8 @@
+using Payroll.Model;
+
 namespace Payroll.Domain;
 
-public class SalesReceipt
+public class SalesReceipt : IEntity
 {
     public Guid Id { get; private set; }
     public Guid EmployeeId { get; private set; }

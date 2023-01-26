@@ -1,6 +1,8 @@
+using Payroll.Model;
+
 namespace Payroll.Domain;
 
-public class TimeCard
+public class TimeCard : IEntity
 {
     public Guid Id { get; private set; }
     public Guid EmployeeId { get; private set; }

@@ -1,6 +1,8 @@
+using Payroll.Model;
+
 namespace Payroll.Domain;
 
-public class ServiceCharge
+public class ServiceCharge : IEntity
 {
     public Guid Id { get; private set; }
     public Guid MemberId { get; private set; }
