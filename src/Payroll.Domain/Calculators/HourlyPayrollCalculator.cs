@@ -1,6 +1,6 @@
 namespace Payroll.Domain.Calculators;
 
-public class PayrollHourlyCalculator
+public class HourlyPayrollCalculator
 {
     
 }
