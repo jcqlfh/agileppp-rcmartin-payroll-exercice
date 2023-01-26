@@ -118,4 +118,22 @@ public class Employee
         this.PaymentBank = newPaymentMethodBank;
         this.PaymentBankAccount = newPaymentMethodBankAccount;
     }
+
+    public void AddToUnion(Guid memberId, decimal unionRate)
+    {
+        if (Guid.Empty.Equals(memberId))
+            throw new ArgumentException("Member id cannot be empty");
+        
+        if (unionRate <= 0m)
+            throw new ArgumentException("Union due rate should be a positive number");
+        
+        this.MemberId = memberId;
+        this.UnionDueRate = unionRate;
+    }
+
+    public void RemoveFromUnion()
+    {
+        this.MemberId = Guid.Empty;
+        this.UnionDueRate = 0m;
+    }
 }

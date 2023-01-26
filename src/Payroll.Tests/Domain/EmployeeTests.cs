@@ -550,4 +550,112 @@ public class EmployeeTests
         Assert.Equal(bank, employee.PaymentBank);
         Assert.Equal(account, employee.PaymentBankAccount);
     }
+
+    [Fact]
+    public void Employee_Not_Unionized_Changed_To_Valid_Union_Setting()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var memberId = Guid.NewGuid();
+        decimal unionRate = 10m;
+        employee.AddToUnion(memberId, unionRate);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(memberId, employee.MemberId);
+        Assert.Equal(unionRate, employee.UnionDueRate);
+        Assert.True(employee.IsUnionized);
+    }
+
+    [Fact]
+    public void Employee_Not_Unionized_Changed_To_Invalid_Union_MemberId()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var memberId = new Guid();
+        decimal unionRate = 10m;
+        Action addToUnion = () => employee.AddToUnion(memberId, unionRate);
+
+        // Assert
+        Assert.Throws<ArgumentException>(addToUnion);
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(memberId, employee.MemberId);
+        Assert.Equal(0m, employee.UnionDueRate);
+        Assert.False(employee.IsUnionized);
+    }
+
+    [Fact]
+    public void Employee_Not_Unionized_Changed_To_Invalid_Union_DueRate()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        // Act
+        var memberId = Guid.NewGuid();
+        decimal unionRate = -10m;
+        Action addToUnion = () => employee.AddToUnion(memberId, unionRate);
+
+        // Assert
+        Assert.Throws<ArgumentException>(addToUnion);
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(Guid.Empty, employee.MemberId);
+        Assert.Equal(0m, employee.UnionDueRate);
+        Assert.False(employee.IsUnionized);
+    }
+
+    [Fact]
+    public void Employee_Unionized_Changed_To_Valid_Non_Union_Setting()
+    {
+        // Arrange
+        var name = "Employee";
+        var address = "St Emplyee";
+        var paymentType = PaymentType.Monthly;
+        decimal paymentValue = 1000m;
+        var employee = new Employee(name, address, paymentType, paymentValue);
+
+        var memberId = Guid.NewGuid();
+        decimal unionRate = 10m;
+        employee.AddToUnion(memberId, unionRate);
+        
+        // Act
+        employee.RemoveFromUnion();
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, employee.Id);
+        Assert.Equal(name, employee.Name);
+        Assert.Equal(address, employee.Address);
+        Assert.Equal(paymentType, employee.PaymentType);
+        Assert.Equal(paymentValue, employee.PaymentValue);
+        Assert.Equal(Guid.Empty, employee.MemberId);
+        Assert.Equal(0, employee.UnionDueRate);
+        Assert.False(employee.IsUnionized);
+    }
 }
