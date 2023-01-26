@@ -11,11 +11,8 @@ public class Employee
     public Guid MemberId { get; private set; }
     public decimal UnionDueRate { get; private set; }
     public bool IsUnionized { get => !Guid.Empty.Equals(MemberId); }
-    public PaymentMethod PaymentMethod { get; private set; }
-    public string? PaymentAddress { get; private set; }
-    public string? PaymentBank { get; private set; }
-    public string? PaymentBankAccount { get; private set; }
-
+    public PaycheckSettings PaymentSettings { get; private set; }
+    
     public Employee(string name, string address, PaymentType paymentType, decimal paymentValue, decimal rate = 0m)
     {
         if (string.IsNullOrEmpty(name))
@@ -36,6 +33,7 @@ public class Employee
         this.PaymentType = paymentType;
         this.PaymentValue = paymentValue;
         this.Rate = rate;
+        this.PaymentSettings = new PaycheckSettings(PaymentMethod.Hold);
     }
 
     public void ChangeName(string newName)
@@ -88,35 +86,17 @@ public class Employee
 
     public void ChangeToMailPaymentMethod(string newMethodAddress)
     {
-        if (string.IsNullOrEmpty(newMethodAddress))
-            throw new ArgumentNullException("Payment address cannot be null or empty");
-
-        this.PaymentMethod = PaymentMethod.Mail;
-        this.PaymentAddress = newMethodAddress;
-        this.PaymentBankAccount = null;
-        this.PaymentBank = null;
+        this.PaymentSettings = new PaycheckSettings(PaymentMethod.Mail, newMethodAddress);
     }
 
     public void ChangeToHoldPaymentMethod()
     {
-        this.PaymentMethod = PaymentMethod.Hold;
-        this.PaymentAddress = null;
-        this.PaymentBankAccount = null;
-        this.PaymentBank = null;    
+        this.PaymentSettings = new PaycheckSettings(PaymentMethod.Hold);
     }
 
     public void ChangeToDirectPaymentMethod(string newPaymentMethodBank, string newPaymentMethodBankAccount)
     {
-        if (string.IsNullOrEmpty(newPaymentMethodBank))
-            throw new ArgumentNullException("Payment bank cannot be null or empty");
-
-        if (string.IsNullOrEmpty(newPaymentMethodBankAccount))
-            throw new ArgumentNullException("Payment bank account cannot be null or empty");
-
-        this.PaymentMethod = PaymentMethod.Direct;
-        this.PaymentAddress = null;
-        this.PaymentBank = newPaymentMethodBank;
-        this.PaymentBankAccount = newPaymentMethodBankAccount;
+        this.PaymentSettings = new PaycheckSettings(PaymentMethod.Direct, null, newPaymentMethodBank, newPaymentMethodBankAccount);
     }
 
     public void AddToUnion(Guid memberId, decimal unionRate)

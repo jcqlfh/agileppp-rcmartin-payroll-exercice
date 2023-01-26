@@ -409,7 +409,7 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(newPaymentMethod, employee.PaymentMethod);
+        Assert.Equal(newPaymentMethod, employee.PaymentSettings.Method);
     }
 
     [Fact]
@@ -434,7 +434,7 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(paymentMethod, employee.PaymentMethod);
+        Assert.Equal(paymentMethod, employee.PaymentSettings.Method);
     }
 
     [Fact]
@@ -461,7 +461,7 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(newPaymentMethod, employee.PaymentMethod);
+        Assert.Equal(newPaymentMethod, employee.PaymentSettings.Method);
     }
 
     [Fact]
@@ -486,9 +486,9 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(newPaymentMethod, employee.PaymentMethod);
-        Assert.Equal(newPaymentMethodBank, employee.PaymentBank);
-        Assert.Equal(newPaymentMethodBankAccount, employee.PaymentBankAccount);
+        Assert.Equal(newPaymentMethod, employee.PaymentSettings.Method);
+        Assert.Equal(newPaymentMethodBank, employee.PaymentSettings.Bank);
+        Assert.Equal(newPaymentMethodBankAccount, employee.PaymentSettings.BankAccount);
     }
 
     [Fact]
@@ -516,9 +516,9 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(paymentMethod, employee.PaymentMethod);
-        Assert.Equal(bank, employee.PaymentBank);
-        Assert.Equal(account, employee.PaymentBankAccount);
+        Assert.Equal(paymentMethod, employee.PaymentSettings.Method);
+        Assert.Equal(bank, employee.PaymentSettings.Bank);
+        Assert.Equal(account, employee.PaymentSettings.BankAccount);
     }
 
     [Fact]
@@ -546,9 +546,9 @@ public class EmployeeTests
         Assert.Equal(address, employee.Address);
         Assert.Equal(paymentType, employee.PaymentType);
         Assert.Equal(paymentValue, employee.PaymentValue);
-        Assert.Equal(paymentMethod, employee.PaymentMethod);
-        Assert.Equal(bank, employee.PaymentBank);
-        Assert.Equal(account, employee.PaymentBankAccount);
+        Assert.Equal(paymentMethod, employee.PaymentSettings.Method);
+        Assert.Equal(bank, employee.PaymentSettings.Bank);
+        Assert.Equal(account, employee.PaymentSettings.BankAccount);
     }
 
     [Fact]
