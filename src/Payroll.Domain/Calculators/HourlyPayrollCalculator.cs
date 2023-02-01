@@ -4,11 +4,14 @@ public class HourlyPayrollCalculator
 {
     private const DayOfWeek PAYMENT_WEEK_DAY = DayOfWeek.Friday;
 
-    public Payment Calculate(DateOnly paymentDate, Employee employee)
+    public Payment? Calculate(DateOnly paymentDate, Employee employee)
     {
         if (!paymentDate.DayOfWeek.Equals(PAYMENT_WEEK_DAY))
             return default;
         
+        if (employee.PaymentType != PaymentType.Hourly)
+            throw new InvalidOperationException("This employee has a payment type different then hourly.");
+            
         var lastPaymentDate = LastPaymentDate(paymentDate, paymentDate);
 
         var hoursLogged = employee.TimeCards.Where(t => t.Date >= lastPaymentDate && t.Date <= paymentDate);
@@ -27,7 +30,10 @@ public class HourlyPayrollCalculator
         }
 
         if (employee.IsUnionized)
-            paymentValue -= employee.UnionDueRate * paymentValue - employee.ServiceCharges.Sum(s => s.Due);
+        {
+            var dueSum = employee.ServiceCharges.Sum(s => s.Due);
+            paymentValue -= dueSum + employee.UnionDueRate * (paymentValue - dueSum);
+        }
 
         return new Payment(paymentDate, paymentValue);
     }
